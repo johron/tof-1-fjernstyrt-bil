@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <OneButton.h>
+#include "OneButton.h"
 #include <IRremote.hpp>
 
 int vrx_pin = A0;
@@ -47,10 +47,14 @@ void joystick() {
     if (!sent_middle_last) {
         sent_middle_last = true;
         if (xValue >= 500 && xValue <= 550) {
-            sendIR(HEX_MIDDLE);
+            unsigned long command = (HEX_MIDDLE << 12) | (100 & 0xFFF);
+            sendIR(command);
         } else if (yValue >= 500 && yValue <= 550) {
-            sendIR(HEX_MIDDLE);
+            unsigned long command = (HEX_MIDDLE << 12) | (200 & 0xFFF);
+            sendIR(command);
         }
+    } else {
+        sent_middle_last = false;
     }
     
     delay(10);

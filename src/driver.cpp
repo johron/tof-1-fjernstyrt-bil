@@ -5,10 +5,15 @@ bool should_drive_step = false;
 bool should_turn_step = false;
 
 int receiver_pin = 4;
+
 int drive_dir_pin = 2;
 int drive_step_pin = 3;
 
+int turn_dir_pin = 6;
+int turn_step_pin = 5;
+
 int drive_delay = 10;
+int turn_delay = 10;
 
 enum Commands {
     HEX_MIDDLE = 0xBE489,
@@ -58,7 +63,10 @@ void drive_action(int value, int delay) {
 void turn_action(int value, int delay) {
     Serial.print("turn_action");
     should_turn_step = true;
-    debug_data(value, delay, get_dir(value));
+    int dir = get_dir(value);
+    debug_data(value, delay, dir);
+    turn_delay = delay;
+    digitalWrite(turn_dir_pin, dir);
 }
 
 void receive() {
@@ -70,7 +78,11 @@ void receive() {
         switch (operation) {
             case HEX_MIDDLE:
                 Serial.println("HEX_MIDDLE");
-                should_drive_step = false;
+                if (value == 100) {
+                    should_drive_step = false;
+                } else if (value == 200) {
+                    should_turn_step = false;
+                }
                 break;
             case HEX_BRAKE:
                 Serial.println("HEX_BRAKE");
@@ -99,11 +111,11 @@ void drive_step() {
 }
 
 void turn_step() {
-    //if (should_turn_step) {
-    //    digitalWrite(turn_step_pin, HIGH);
-    //    delay(drive_delay);
-    //    digitalWrite(turn_step_pin, LOW);
-    //}
+    if (should_turn_step) {
+        digitalWrite(turn_step_pin, HIGH);
+        delay(drive_delay);
+        digitalWrite(turn_step_pin, LOW);
+    }
 }
 
 void loop() {
