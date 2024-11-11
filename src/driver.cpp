@@ -1,23 +1,23 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
 
-bool should_drive_step = false;
-bool should_turn_step = false;
-
 int receiver_pin = 4;
+bool is_locked = true;
 
 int drive_dir_pin = 2;
 int drive_step_pin = 3;
+int drive_delay = 10;
+bool should_drive_step = false;
 
 int turn_dir_pin = 6;
 int turn_step_pin = 5;
-
-int drive_delay = 10;
 int turn_delay = 10;
+bool should_turn_step = false;
 
 enum Commands {
-    HEX_MIDDLE = 0xBE489,
-    HEX_BRAKE = 0xAB34D,
+    HEX_MIDDLEX = 0xBE489,
+    HEX_MIDDLEY = 0x4A4F5,
+    HEX_LOCK = 0xAB34D,
     HEX_DRIVE = 0xE4C24,
     HEX_TURN = 0x2CD5A,
 };
@@ -69,6 +69,7 @@ void turn_action(int value, int delay) {
     digitalWrite(turn_dir_pin, dir);
 }
 
+
 void receive() {
     if (IrReceiver.decode()) {
         unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData);
@@ -76,16 +77,13 @@ void receive() {
         unsigned long value = received & 0xFFF;
 
         switch (operation) {
-            case HEX_MIDDLE:
-                Serial.println("HEX_MIDDLE");
-                if (value == 100) {
-                    should_drive_step = false;
-                } else if (value == 200) {
-                    should_turn_step = false;
-                }
+            case HEX_MIDDLEX:
+                Serial.println("HEX_MIDDLEX");
+                should_drive_step = false;
                 break;
-            case HEX_BRAKE:
-                Serial.println("HEX_BRAKE");
+            case HEX_MIDDLEY:
+                Serial.println("HEX_MIDDLEY");
+                should_turn_step = false;
                 break;
             case HEX_DRIVE:
                 drive_action(value, convertToRange(value));
@@ -113,7 +111,7 @@ void drive_step() {
 void turn_step() {
     if (should_turn_step) {
         digitalWrite(turn_step_pin, HIGH);
-        delay(drive_delay);
+        delay(turn_delay);
         digitalWrite(turn_step_pin, LOW);
     }
 }
@@ -121,7 +119,7 @@ void turn_step() {
 void loop() {
     receive();
     drive_step();
-    //turn_step();
+    turn_step();
 }
 
 void setup() {

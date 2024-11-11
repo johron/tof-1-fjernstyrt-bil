@@ -8,11 +8,12 @@ int vry_pin = A1;
 int ir_led_pin = 2;
 int joystick_btn_pin = 3;
 
-bool sent_middle_last = false;
+bool sent_middlex_last = false;
+bool sent_middley_last = false;
 
 enum Commands {
-    HEX_MIDDLE = 0xBE489,
-    HEX_BRAKE = 0xAB34D,
+    HEX_MIDDLEX = 0xBE489,
+    HEX_MIDDLEY = 0x4A4F5,
     HEX_DRIVE = 0xE4C24,
     HEX_TURN = 0x2CD5A,
 };
@@ -33,35 +34,36 @@ void joystick() {
     int yValue = analogRead(vry_pin);
     
     if (xValue < 500 || xValue > 550) { // Speed
-        sent_middle_last = false;
+        sent_middlex_last = false;
         unsigned long command = (HEX_DRIVE << 12) | (xValue & 0xFFF);
         sendIR(command);
     }
 
     if (yValue < 500 || yValue > 550) { // Turn
-        sent_middle_last = false;
+        sent_middley_last = false;
         unsigned long command = (HEX_TURN << 12) | (yValue & 0xFFF);
         sendIR(command);
     }
 
-    if (!sent_middle_last) {
-        sent_middle_last = true;
+    if (!sent_middlex_last) {
         if (xValue >= 500 && xValue <= 550) {
-            unsigned long command = (HEX_MIDDLE << 12) | (100 & 0xFFF);
-            sendIR(command);
-        } else if (yValue >= 500 && yValue <= 550) {
-            unsigned long command = (HEX_MIDDLE << 12) | (200 & 0xFFF);
-            sendIR(command);
+            sent_middlex_last = true;
+            sendIR(HEX_MIDDLEX);
         }
-    } else {
-        sent_middle_last = false;
+    }
+
+    if (!sent_middley_last) {
+        if (yValue >= 500 && yValue <= 550) {
+            sent_middley_last = true;
+            sendIR(HEX_MIDDLEY);
+        }
     }
     
     delay(10);
 }
 
 static void clickJoystickButton() {
-    sendIR(HEX_BRAKE);
+    //sendIR(HEX_LOCK);
 }
 
 void buttons() {
