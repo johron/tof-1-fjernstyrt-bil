@@ -39,19 +39,19 @@ void joystick() {
         sendIR(command);
     }
 
-    if (!sent_middlex_last) {
+    //if (!sent_middlex_last) {
         if (xValue >= 500 && xValue <= 550) {
             sent_middlex_last = true;
             sendIR(HEX_MIDDLEX);
         }
-    }
+    //}
 
-    if (!sent_middley_last) {
+    //if (!sent_middley_last) {
         if (yValue >= 500 && yValue <= 550) {
             sent_middley_last = true;
             sendIR(HEX_MIDDLEY);
         }
-    }
+    //}
     
     delay(10);
 }
