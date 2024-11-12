@@ -3,11 +3,10 @@
 #include <motor.h>
 #include <shared.h>
 
-int receiver_pin = 4;
-bool is_locked = true;
+const int receiver_pin = 4;
+const int drive_dir_pin = 2;
+const int drive_step_pin = 3;
 
-int drive_dir_pin = 2;
-int drive_step_pin = 3;
 int drive_delay = 10;
 bool should_drive_step = false;
 

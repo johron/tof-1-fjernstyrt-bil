@@ -4,11 +4,10 @@
 #include <OneButton.h>
 #include <shared.h>
 
-int vrx_pin = A0;
-int vry_pin = A1;
-
-int ir_led_pin = 2;
-int joystick_btn_pin = 3;
+const int vrx_pin = A0;
+const int vry_pin = A1;
+const int ir_led_pin = 2;
+const int joystick_btn_pin = 3;
 
 bool sent_middlex_last = false;
 bool sent_middley_last = false;
