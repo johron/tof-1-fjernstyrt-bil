@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "OneButton.h"
 #include <IRremote.hpp>
+#include <OneButton.h>
+#include <shared.h>
 
 int vrx_pin = A0;
 int vry_pin = A1;
