@@ -12,13 +12,6 @@ int joystick_btn_pin = 3;
 bool sent_middlex_last = false;
 bool sent_middley_last = false;
 
-enum Commands {
-    HEX_MIDDLEX = 0xBE489,
-    HEX_MIDDLEY = 0x4A4F5,
-    HEX_DRIVE = 0xE4C24,
-    HEX_TURN = 0x2CD5A,
-};
-
 OneButton JoystickButton(joystick_btn_pin, true, true);
 
 void sendIR(unsigned long hex) {
