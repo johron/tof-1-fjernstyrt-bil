@@ -6,8 +6,8 @@
 int receiver_pin = 4;
 bool is_locked = true;
 
-int turn_dir_pin = 6;
-int turn_step_pin = 5;
+int turn_dir_pin = 2;
+int turn_step_pin = 3;
 int turn_delay = 10;
 bool should_turn_step = false;
 
