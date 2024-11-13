@@ -4,14 +4,10 @@
 #include <OneButton.h>
 #include <shared.h>
 
-int vrx_pin = A0;
-int vry_pin = A1;
-
-int ir_led_pin = 2;
-int joystick_btn_pin = 3;
-
-bool sent_middlex_last = false;
-bool sent_middley_last = false;
+const int vrx_pin = A0;
+const int vry_pin = A1;
+const int ir_led_pin = 2;
+const int joystick_btn_pin = 3;
 
 //CircularBuffer<long, 15> sentLast;
 
@@ -44,24 +40,20 @@ void joystick() {
     int yValue = analogRead(vry_pin);
 
     if (xValue < 500 || xValue > 550) { // Speed
-        sent_middlex_last = false;
         unsigned long command = (HEX_DRIVE << 12) | (xValue & 0xFFF);
         sendIR(command);
     }
 
     if (yValue < 500 || yValue > 550) { // Turn
-        sent_middley_last = false;
         unsigned long command = (HEX_TURN << 12) | (yValue & 0xFFF);
         sendIR(command);
     }
 
     if (xValue >= 500 && xValue <= 550) {
-        sent_middlex_last = true;
         sendIR(HEX_MIDDLEX);
     }
 
     if (yValue >= 500 && yValue <= 550) {
-        sent_middley_last = true;
         sendIR(HEX_MIDDLEY);
     }
     
