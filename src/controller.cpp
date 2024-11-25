@@ -12,7 +12,7 @@ int joystick_btn_pin = 3;
 OneButton JoystickButton(joystick_btn_pin, true, true);
 
 unsigned long lastCommandTime = 0;
-unsigned long lastCommand = 0;
+unsigned long lastCommand = 0xF00FF00F; // defualt
 unsigned long delayTime = 1000; // ms
 
 void sendIR(unsigned long hex) {
@@ -57,7 +57,7 @@ void joystick() {
 }
 
 static void clickJoystickButton() {
-    //sendIR(something);
+    sendIR(HEX_LIGHTS);
 }
 
 void buttons() {
