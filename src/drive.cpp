@@ -32,7 +32,7 @@ void headlights_action() {
 void receive() {
     if (IrReceiver.decode()) {
         unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData);
-        unsigned long operation = removeLastThreeDigits(received);
+        unsigned long operation = get_value(received);
         unsigned long value = received & 0xFFF;
 
         switch (operation) {
@@ -41,7 +41,7 @@ void receive() {
                 should_drive_step = false;
                 break;
             case HEX_DRIVE:
-                drive_action(value, convertToRange(value));
+                drive_action(value, get_delay(value));
                 break;
             case HEX_HEADLIGHTS:
                 headlights_action();

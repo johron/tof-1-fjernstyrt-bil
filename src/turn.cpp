@@ -21,9 +21,10 @@ void turn_action(int value, int delay) {
 
 void receive() {
     if (IrReceiver.decode()) {
-        unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData);
-        unsigned long operation = removeLastThreeDigits(received);
-        unsigned long value = received & 0xFFF;
+        unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData); /* The number is received as LSB, but have to reverse it to MSB
+                                                                                              https://techdocs.altium.com/display/FPGA/NEC+Infrared+Transmission+Protocol*/
+        unsigned long operation = get_value(received);
+        unsigned long value = received & 0xFFF; // Remove the instruction hex number so the only number left is the for example joystick x value
 
         switch (operation) {
             case HEX_MIDDLEY:
@@ -31,7 +32,7 @@ void receive() {
                 should_turn_step = false;
                 break;
             case HEX_TURN:
-                turn_action(value, convertToRange(value));
+                turn_action(value, get_delay(value));
                 break;
             default:
                 Serial.print(value);

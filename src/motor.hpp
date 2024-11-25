@@ -1,10 +1,10 @@
 #include <Arduino.h>
 
-unsigned long removeLastThreeDigits(unsigned long hexCode) {
+unsigned long get_value(unsigned long hexCode) {
     return hexCode >> 12;
 }
 
-int convertToRange(unsigned long value) {
+int get_delay(unsigned long value) {
     if (value <= 525) {
         return map(value, 0, 511, 1, 10);
     } else {
