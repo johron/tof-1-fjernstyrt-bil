@@ -34,7 +34,8 @@ void receive() {
                 turn_action(value, convertToRange(value));
                 break;
             default:
-                Serial.println("UNRECOG");
+                Serial.print(value);
+                Serial.println(" - UNRECOG");
                 break;
         }
         
