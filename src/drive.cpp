@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
-#include <motor.h>
-#include <shared.h>
+#include <motor.hpp>
+#include <shared.hpp>
 
 const int receiver_pin = 4;
 const int drive_dir_pin = 2;

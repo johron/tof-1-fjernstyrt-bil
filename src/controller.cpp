@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
 #include <OneButton.h>
-#include <shared.h>
+#include <shared.hpp>
 
 int vry_pin = A0; /* In this project i use the X axis as the throttle because that's
                      how i prefer to hold it, so X is vertical and Y is horizontal */
