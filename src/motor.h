@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 unsigned long removeLastThreeDigits(unsigned long hexCode) {
-    return hexCode >> 12; // Shift right by 12 bits to remove the last three hex digits
+    return hexCode >> 12;
 }
 
 int convertToRange(unsigned long value) {
