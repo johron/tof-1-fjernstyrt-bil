@@ -18,11 +18,11 @@ unsigned long delayTime = 1000; // ms
 void sendIR(unsigned long hex) {
     unsigned long currentTime = millis();
     unsigned long newhex = hex;
+    if (newhex != lastCommand || (currentTime - lastCommandTime) >= delayTime) {
     if ((newhex & 0xFFF00000) == 0) {
         newhex = (newhex << 12) | 0xFFF;
     }
 
-    if (newhex != lastCommand || (currentTime - lastCommandTime) >= delayTime) {
         IrSender.sendNECMSB(newhex, 32);
         delay(10);
 
