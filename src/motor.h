@@ -6,9 +6,9 @@ unsigned long removeLastThreeDigits(unsigned long hexCode) {
 
 int convertToRange(unsigned long value) {
     if (value <= 525) {
-        return map(value, 0, 525, 1, 10);
+        return map(value, 0, 511, 1, 10);
     } else {
-        return map(value, 525, 1022, 10, 1);
+        return map(value, 511, 1022, 10, 1);
     }
 }
 

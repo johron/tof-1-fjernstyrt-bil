@@ -3,8 +3,8 @@
 #include <OneButton.h>
 #include <shared.h>
 
-int vrx_pin = A0;
-int vry_pin = A1;
+int vry_pin = A0;
+int vrx_pin = A1;
 
 int ir_led_pin = 2;
 int joystick_btn_pin = 3;
@@ -17,16 +17,16 @@ unsigned long delayTime = 1000; // ms
 
 void sendIR(unsigned long hex) {
     unsigned long currentTime = millis();
-    if (hex != lastCommand || (currentTime - lastCommandTime) >= delayTime) {
-        unsigned long newhex = hex;
-        if ((newhex & 0xFFF00000) == 0) {
-            newhex = (newhex << 12) | 0xFFF;
-        }
+    unsigned long newhex = hex;
+    if ((newhex & 0xFFF00000) == 0) {
+        newhex = (newhex << 12) | 0xFFF;
+    }
 
+    if (newhex != lastCommand || (currentTime - lastCommandTime) >= delayTime) {
         IrSender.sendNECMSB(newhex, 32);
         delay(10);
 
-        lastCommand = hex;
+        lastCommand = newhex;
         lastCommandTime = currentTime;
     }
 }
@@ -35,21 +35,21 @@ void joystick() {
     int xValue = analogRead(vrx_pin); 
     int yValue = analogRead(vry_pin);
 
-    if (xValue < 500 || xValue > 550) {
+    if (xValue < 450 || xValue > 600) {
         unsigned long command = (HEX_DRIVE << 12) | (xValue & 0xFFF);
         sendIR(command);
     }
 
-    if (yValue < 500 || yValue > 550) {
+    if (yValue < 450 || yValue > 600) {
         unsigned long command = (HEX_TURN << 12) | (yValue & 0xFFF);
         sendIR(command);
     }
 
-    if (xValue >= 500 && xValue <= 550) {
+    if (xValue >= 450 && xValue <= 600) {
         sendIR(HEX_MIDDLEX);
     }
 
-    if (yValue >= 500 && yValue <= 550) {
+    if (yValue >= 450 && yValue <= 600) {
         sendIR(HEX_MIDDLEY);
     }
     
@@ -65,9 +65,29 @@ void buttons() {
     JoystickButton.tick();
 }
 
+void test() {
+    sendIR((HEX_DRIVE << 12) | (1022 & 0xFFF));
+    delay(20);
+    sendIR((HEX_TURN << 12) | (1022 & 0xFFF));
+    delay(1000);
+    sendIR((HEX_MIDDLEX << 12) | (255 & 0xFFF));
+    delay(20);
+    sendIR((HEX_MIDDLEY << 12) | (255 & 0xFFF));
+    delay(1000);
+    sendIR((HEX_DRIVE << 12) | (0 & 0xFFF));
+    delay(20);
+    sendIR((HEX_TURN << 12) | (0 & 0xFFF));
+    delay(1000);
+    sendIR((HEX_MIDDLEX << 12) | (255 & 0xFFF));
+    delay(20);
+    sendIR((HEX_MIDDLEY << 12) | (255 & 0xFFF));
+    delay(1000);
+}
+
 void loop() {
     joystick();
     buttons();
+    //test();
 }
 
 void setup() {
