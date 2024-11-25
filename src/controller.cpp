@@ -65,29 +65,10 @@ void buttons() {
     JoystickButton.tick();
 }
 
-void test() {
-    sendIR((HEX_DRIVE << 12) | (1022 & 0xFFF));
-    delay(20);
-    sendIR((HEX_TURN << 12) | (1022 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_MIDDLEX << 12) | (255 & 0xFFF));
-    delay(20);
-    sendIR((HEX_MIDDLEY << 12) | (255 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_DRIVE << 12) | (0 & 0xFFF));
-    delay(20);
-    sendIR((HEX_TURN << 12) | (0 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_MIDDLEX << 12) | (255 & 0xFFF));
-    delay(20);
-    sendIR((HEX_MIDDLEY << 12) | (255 & 0xFFF));
-    delay(1000);
-}
 
 void loop() {
     joystick();
     buttons();
-    //test();
 }
 
 void setup() {
