@@ -36,8 +36,8 @@ void receive() {
         unsigned long value = received & 0xFFF;
 
         switch (operation) {
-            case HEX_MIDDLEX:
-                Serial.println("HEX_MIDDLEX");
+            case HEX_MIDDLE:
+                Serial.println("HEX_MIDDLE");
                 should_drive_step = false;
                 break;
             case HEX_DRIVE:

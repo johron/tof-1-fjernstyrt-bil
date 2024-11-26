@@ -27,8 +27,8 @@ void receive() {
         unsigned long value = received & 0xFFF; // Remove the instruction hex number so the only number left is the for example joystick x value
 
         switch (operation) {
-            case HEX_MIDDLEY:
-                Serial.println("HEX_MIDDLEY");
+            case HEX_MIDDLE:
+                Serial.println("HEX_MIDDLE");
                 should_turn_step = false;
                 break;
             case HEX_TURN:
@@ -36,6 +36,8 @@ void receive() {
                 break;
             default:
                 Serial.print(value);
+                Serial.print(" - ");
+                Serial.print(operation);
                 Serial.println(" - UNRECOG");
                 break;
         }

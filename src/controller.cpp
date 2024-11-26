@@ -17,24 +17,17 @@ unsigned long delayTime = 1000;
 
 // Function to send IR command
 void sendIR(unsigned long hex) {
-    unsigned long currentTime = millis(); // Get the current time
     unsigned long newhex = hex;
 
-    // Check if the command is different or if the delay time has passed
-    if (newhex != lastCommand || (currentTime - lastCommandTime) >= delayTime) {
-        // Check if the hex number is eight digits long
-        if ((newhex & 0xFFF00000) == 0) {
-            newhex = (newhex << 12) | 0xFFF; /* Add three hexadecimal digits at the end FFF (dec:4095)
-                                                so the number is eight digits long */
-        }
-
-        IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
-                                            number which is 32 bits 8*16=32 */
-        delay(10);
-
-        lastCommand = newhex;
-        lastCommandTime = currentTime;
+    // Check if the hex number is eight digits long
+    if ((newhex & 0xFFF00000) == 0) {
+        newhex = (newhex << 12) | 0xFFF; /* Add three hexadecimal digits at the end FFF (dec:4095)
+                                            so the number is eight digits long */
     }
+
+    IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
+                                        number which is 32 bits 8*16=32 */
+    delay(10);
 }
 
 void joystick() {
@@ -55,15 +48,10 @@ void joystick() {
     }
 
     // Check if the joystick is centered in the x direction
-    if (xValue >= 450 && xValue <= 600) {
-        sendIR(HEX_MIDDLEX);
-    }
+    if ((xValue >= 450 && xValue <= 600) || (yValue >= 450 && yValue <= 600)) {
+        sendIR(HEX_MIDDLE);
+    } 
 
-    // Check if the joystick is centered in the y direction
-    if (yValue >= 450 && yValue <= 600) {
-        sendIR(HEX_MIDDLEY);
-    }
-    
     delay(10);
 }
 

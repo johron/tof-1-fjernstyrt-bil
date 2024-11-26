@@ -6,9 +6,9 @@ unsigned long get_value(unsigned long hexCode) {
 
 int get_delay(unsigned long value) {
     if (value <= 525) {
-        return map(value, 0, 511, 1, 10);
+        return map(value, 0, 511, 0, 10);
     } else {
-        return map(value, 511, 1022, 10, 1);
+        return map(value, 511, 1022, 0, 10);
     }
 }
 
