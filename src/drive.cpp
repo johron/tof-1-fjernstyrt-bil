@@ -12,12 +12,12 @@ const int reverse_lights_com_pin = 6;
 
 int drive_delay = 10;
 bool should_drive_step = false;
-int dir = HIGH;
+//int dir = HIGH;
 
 void drive_action(int value, int delay) {
     Serial.print("drive_action");
     should_drive_step = true;
-    dir = get_dir(value);
+    int dir = get_dir(value);
     drive_delay = delay;
     debug_data(value, delay, dir);
     digitalWrite(drive_dir_pin, dir);
@@ -64,18 +64,18 @@ void drive_step() {
     }
 }
 
-void reverse_lights() {
+/*void reverse_lights() {
     if (dir == LOW) { // gjetter at LOW er rygging
         digitalWrite(reverse_lights_com_pin, HIGH); // jeg har ingen anelse om dette kommmer til å fungere
         delay(100);
         digitalWrite(reverse_lights_com_pin, LOW);
     }
-}
+}*/
 
 void loop() {
     receive();
     drive_step();
-    reverse_lights();
+    //reverse_lights();
 }
 
 void setup() {
