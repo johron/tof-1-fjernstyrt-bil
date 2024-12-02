@@ -13,7 +13,7 @@ int get_delay(unsigned long value) {
 }
 
 int get_dir(int value) {
-    if (value <= 525) {
+    if (value <= 511) {
         return HIGH;
     } else {
         return LOW;

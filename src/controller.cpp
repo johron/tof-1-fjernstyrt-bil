@@ -48,9 +48,16 @@ void joystick() {
     }
 
     // Check if the joystick is centered in the x direction
-    if ((xValue >= 450 && xValue <= 600) || (yValue >= 450 && yValue <= 600)) {
-        sendIR(HEX_MIDDLE);
-    } 
+    if (xValue >= 450 && xValue <= 600) {
+        unsigned long command = (HEX_MIDDLE << 12) | 0xFFF;
+        sendIR(command);
+    }
+
+    // Check if the joystick is centered in the y direction
+    if (yValue >= 450 && yValue <= 600) {
+        unsigned long command = (HEX_MIDDLE << 12) | 0x000;
+        sendIR(command);
+    }
 
     delay(10);
 }
@@ -64,24 +71,8 @@ void buttons() {
     JoystickButton.tick();
 }
 
-void test() {
-    sendIR((HEX_DRIVE << 12) | (1022 & 0xFFF));
-    delay(20);
-    sendIR((HEX_TURN << 12) | (1022 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_MIDDLE << 12) | (255 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_DRIVE << 12) | (0 & 0xFFF));
-    delay(20);
-    sendIR((HEX_TURN << 12) | (0 & 0xFFF));
-    delay(1000);
-    sendIR((HEX_MIDDLE << 12) | (255 & 0xFFF));
-    delay(1000);
-}
-
 void loop() {
-    test();
-    //joystick();
+    joystick();
     buttons();
 }
 

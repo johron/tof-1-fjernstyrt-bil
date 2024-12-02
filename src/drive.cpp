@@ -37,8 +37,10 @@ void receive() {
 
         switch (operation) {
             case HEX_MIDDLE:
-                Serial.println("HEX_MIDDLE");
-                should_drive_step = false;
+                if (value == 0xFFF) {
+                    Serial.println("HEX_MIDDLEX");
+                    should_drive_step = false;
+                }
                 break;
             case HEX_DRIVE:
                 drive_action(value, get_delay(value));

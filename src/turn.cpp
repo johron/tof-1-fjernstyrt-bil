@@ -28,8 +28,10 @@ void receive() {
 
         switch (operation) {
             case HEX_MIDDLE:
-                Serial.println("HEX_MIDDLE");
-                should_turn_step = false;
+                if (value == 0x000) {
+                    Serial.println("HEX_MIDDLEY");
+                    should_turn_step = false;
+                }
                 break;
             case HEX_TURN:
                 turn_action(value, get_delay(value));
