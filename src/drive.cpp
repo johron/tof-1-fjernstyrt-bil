@@ -27,7 +27,7 @@ void receive() {
 
         switch (operation) {
             case HEX_MIDDLE:
-                if (value == 0xFFF) {
+                if (value == 0x000) {
                     Serial.println("HEX_MIDDLEX");
                     should_drive_step = false;
                 }
@@ -61,7 +61,12 @@ void test() {
 
 void loop() {
     //test();
-    receive();
+    static unsigned long last_receive_time = 0;
+    unsigned long current_time = millis();
+    if (current_time - last_receive_time >= 1000) {
+        receive();
+        last_receive_time = current_time;
+    }
     drive_step();
 }
 

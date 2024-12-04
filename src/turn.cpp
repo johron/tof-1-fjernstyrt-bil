@@ -28,7 +28,7 @@ void receive() {
 
         switch (operation) {
             case HEX_MIDDLE:
-                if (value == 0x000) {
+                if (value == 0xFFF) {
                     Serial.println("HEX_MIDDLEY");
                     should_turn_step = false;
                 }

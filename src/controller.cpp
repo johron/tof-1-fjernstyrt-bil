@@ -47,7 +47,7 @@ void joystick() {
     }
 
     // Check if the joystick is centered in the x direction
-    if (xValue >= 450 && xValue <= 600) {
+    /*if (xValue >= 450 && xValue <= 600) {
         unsigned long command = (HEX_MIDDLE << 12) | 0x000;
         sendIR(command);
     }
@@ -56,7 +56,7 @@ void joystick() {
     if (yValue >= 450 && yValue <= 600) {
         unsigned long command = (HEX_MIDDLE << 12) | 0xFFF;
         sendIR(command);
-    }
+    }*/
 
     delay(10);
 }
