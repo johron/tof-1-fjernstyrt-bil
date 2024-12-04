@@ -3,8 +3,7 @@
 #include <OneButton.h>
 #include <shared.hpp>
 
-int vry_pin = A0; /* In this project i use the X axis as the throttle because that's
-                     how i prefer to hold it, so X is vertical and Y is horizontal */
+int vry_pin = A0;
 int vrx_pin = A1;
 int ir_led_pin = 2;
 int joystick_btn_pin = 3;
@@ -49,26 +48,20 @@ void joystick() {
 
     // Check if the joystick is centered in the x direction
     if (xValue >= 450 && xValue <= 600) {
-        unsigned long command = (HEX_MIDDLE << 12) | 0xFFF;
+        unsigned long command = (HEX_MIDDLE << 12) | 0x000;
         sendIR(command);
     }
 
     // Check if the joystick is centered in the y direction
     if (yValue >= 450 && yValue <= 600) {
-        unsigned long command = (HEX_MIDDLE << 12) | 0x000;
+        unsigned long command = (HEX_MIDDLE << 12) | 0xFFF;
         sendIR(command);
     }
 
     delay(10);
 }
 
-static void clickJoystickButton() {
-    sendIR(HEX_HEADLIGHTS);
-}
-
 void buttons() {
-    JoystickButton.attachClick(clickJoystickButton);
-    JoystickButton.tick();
 }
 
 void loop() {

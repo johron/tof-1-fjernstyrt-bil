@@ -4,15 +4,11 @@
 #include <shared.hpp>
 
 const int receiver_pin = 4;
-const int drive_dir_pin = 2;
-const int drive_step_pin = 3;
-
-const int headlights_com_pin = 5;
-const int reverse_lights_com_pin = 6;
+const int drive_dir_pin = 3;
+const int drive_step_pin = 2;
 
 int drive_delay = 10;
 bool should_drive_step = false;
-//int dir = HIGH;
 
 void drive_action(int value, int delay) {
     Serial.print("drive_action");
@@ -21,12 +17,6 @@ void drive_action(int value, int delay) {
     drive_delay = delay;
     debug_data(value, delay, dir);
     digitalWrite(drive_dir_pin, dir);
-}
-
-void headlights_action() {
-    digitalWrite(headlights_com_pin, HIGH); // jeg har ingen anelse om dette kommmer til å fungere
-    delay(100);
-    digitalWrite(headlights_com_pin, LOW);
 }
 
 void receive() {
@@ -44,9 +34,6 @@ void receive() {
                 break;
             case HEX_DRIVE:
                 drive_action(value, get_delay(value));
-                break;
-            case HEX_HEADLIGHTS:
-                headlights_action();
                 break;
             default:
                 Serial.print(value);
@@ -66,18 +53,16 @@ void drive_step() {
     }
 }
 
-/*void reverse_lights() {
-    if (dir == LOW) { // gjetter at LOW er rygging
-        digitalWrite(reverse_lights_com_pin, HIGH); // jeg har ingen anelse om dette kommmer til å fungere
-        delay(100);
-        digitalWrite(reverse_lights_com_pin, LOW);
-    }
-}*/
+void test() {
+    digitalWrite(drive_step_pin, HIGH);
+    delay(1);
+    digitalWrite(drive_step_pin, LOW);
+}
 
 void loop() {
+    //test();
     receive();
     drive_step();
-    //reverse_lights();
 }
 
 void setup() {

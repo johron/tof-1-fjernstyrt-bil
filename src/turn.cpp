@@ -4,8 +4,8 @@
 #include <shared.hpp>
 
 const int receiver_pin = 4;
-const int turn_dir_pin = 2;
-const int turn_step_pin = 3;
+const int turn_dir_pin = 3;
+const int turn_step_pin = 2;
 
 int turn_delay = 10;
 bool should_turn_step = false;
