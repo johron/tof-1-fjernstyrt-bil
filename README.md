@@ -9,3 +9,7 @@ Dette prosjektet er ikke fullført.
 
 ## Lisens
 Lisensiert under MIT-lisensen; vennligst se [lisensfilen](./LICENSE.md) for vilkår.
+
+
+## plan
+lag program det bilen bare går fram og tilbake, også svinging til sides (ingen justerbar fart, 100% fart 0% fart)
