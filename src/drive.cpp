@@ -9,6 +9,7 @@ const int drive_dir_pin = 3;
 const int receiver_pin = 4;
 
 bool should_drive_step = false;
+static unsigned long last_receive_time = 0;
 
 void drive_action(int value) {
     Serial.print("drive_action");
@@ -26,24 +27,11 @@ void receive() {
 
         if (operation == HEX_DRIVE) {
             drive_action(value); 
+        } else {
+            Serial.print("unrecog, value=");
+            Serial.println(value);
         }
 
-        switch (operation) {
-            case HEX_MIDDLE:
-                if (value == 0x000) {
-                    Serial.println("HEX_MIDDLEX");
-                    should_drive_step = false;
-                }
-                break;
-            case HEX_DRIVE:
-                drive_action(value, get_delay(value));
-                break;
-            default:
-                Serial.print(value);
-                Serial.println(" - UNRECOG");
-                break;
-        }
-        
         IrReceiver.resume();
     }
 }
@@ -51,8 +39,8 @@ void receive() {
 void drive_step() {
     if (should_drive_step) {
         digitalWrite(drive_step_pin, HIGH);
-        delay(drive_delay);
-        digitalWrite(drive_step_pin, LOW); // hugin sier at jeg bør prøve å snu disse om for å se om det går raskere.
+        delay(1);
+        digitalWrite(drive_step_pin, LOW);
     }
 }
 
@@ -63,10 +51,8 @@ void test() {
 }
 
 void loop() {
-    //test();
-    static unsigned long last_receive_time = 0;
     unsigned long current_time = millis();
-    if (current_time - last_receive_time >= 1000) {
+    if (current_time - last_receive_time >= 500) {
         receive();
         last_receive_time = current_time;
     }
