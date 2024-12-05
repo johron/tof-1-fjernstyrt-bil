@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
 
-#include "shared.hpp"
-#include "motor.hpp"
+#include "../hdr/shared.hpp"
+#include "../hdr/motor.hpp"
 
 const int step_pin = 2;
 const int dir_pin = 3;
