@@ -1,21 +1,20 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
-#include <motor.hpp>
-#include <shared.hpp>
 
-const int receiver_pin = 4;
-const int drive_dir_pin = 3;
+#include "shared.hpp"
+#include "motor.hpp"
+
 const int drive_step_pin = 2;
+const int drive_dir_pin = 3;
+const int receiver_pin = 4;
 
-int drive_delay = 10;
 bool should_drive_step = false;
 
-void drive_action(int value, int delay) {
+void drive_action(int value) {
     Serial.print("drive_action");
     should_drive_step = true;
     int dir = get_dir(value);
-    drive_delay = delay;
-    debug_data(value, delay, dir);
+    debug_data(value, dir);
     digitalWrite(drive_dir_pin, dir);
 }
 
@@ -24,6 +23,10 @@ void receive() {
         unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData);
         unsigned long operation = get_value(received);
         unsigned long value = received & 0xFFF;
+
+        if (operation == HEX_DRIVE) {
+            drive_action(value); 
+        }
 
         switch (operation) {
             case HEX_MIDDLE:
