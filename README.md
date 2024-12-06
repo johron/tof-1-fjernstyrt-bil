@@ -13,3 +13,7 @@ Lisensiert under MIT-lisensen; vennligst se [lisensfilen](./LICENSE.md) for vilk
 
 ## plan
 lag program det bilen bare går fram og tilbake, også svinging til sides (ingen justerbar fart, 100% fart 0% fart)
+
+
+## hva gjør det
+Dette snurrer bare motorene og kan endre retning etter kontroller-inputs. Snurrer begge motorene.

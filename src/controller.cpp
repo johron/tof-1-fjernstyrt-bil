@@ -9,6 +9,8 @@ const int vrx_pin = A1;
 const int ir_led_pin = 2;
 const int joystick_btn_pin = 3;
 
+unsigned long oldhex = 0xF00FF00F;
+
 // Function to send IR command
 void sendIR(unsigned long hex) {
     unsigned long newhex = hex;
