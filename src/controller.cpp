@@ -9,8 +9,6 @@ const int vrx_pin = A1;
 const int ir_led_pin = 2;
 const int joystick_btn_pin = 3;
 
-unsigned long lastCommands[2];
-
 // Function to send IR command
 void sendIR(unsigned long hex) {
     unsigned long newhex = hex;
@@ -23,32 +21,24 @@ void sendIR(unsigned long hex) {
 
     IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
                                         number which is 32 bits 8*16=32 */
+    Serial.println(newhex);
     delay(10);
 }
 
 void joystick() {
     int xValue = analogRead(vrx_pin);
     int yValue = analogRead(vry_pin);
-    unsigned long commands[2];
 
     if (xValue < 450) {
-        commands[0] = (HEX_DRIVE << 12) | 0x3FF;
+        sendIR((HEX_DRIVE << 12) | 0x3FF);
     } else if (xValue > 550) {
-        commands[0] = (HEX_DRIVE << 12) | 0x000;
+        sendIR((HEX_DRIVE << 12) | 0x000);
     }
 
     if (yValue < 450) {
-        commands[1] = (HEX_TURN << 12) | 0x3FF;
+        sendIR((HEX_TURN << 12) | 0x3FF);
     } else if (yValue > 550) {
-        commands[1] = (HEX_TURN << 12) | 0x000;
-    }
-
-    for (int i = 0; i < 2; i++) {
-        if (commands[i] != 0) {
-            if (commands[i] != lastCommands[i]) break;
-            sendIR(commands[i]);
-        }
-        lastCommands[i] = commands[i];
+        sendIR((HEX_TURN << 12) | 0x000);
     }
 
     delay(10);
