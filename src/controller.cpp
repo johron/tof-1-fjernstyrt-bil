@@ -2,7 +2,7 @@
 #include <IRremote.hpp>
 #include <OneButton.h>
 
-#include "shared.hpp"
+#include "../hdr/shared.hpp"
 
 const int vry_pin = A0;
 const int vrx_pin = A1;

@@ -14,7 +14,7 @@ static unsigned long last_time = 0;
 void setup_step(int value) {
     should_step = true;
     int dir = get_dir(value);
-    Serial.print("drive_action");
+    Serial.print("turn_action");
     debug_data(value, dir);
     digitalWrite(dir_pin, dir);
 }
@@ -25,7 +25,7 @@ void receive() {
         unsigned long operation = get_value(received);
         unsigned long value = received & 0xFFF;
 
-        if (operation == HEX_DRIVE) {
+        if (operation == HEX_TURN) {
             setup_step(value); 
         } else {
             Serial.print("unrecog, value=");
