@@ -21,6 +21,12 @@ void sendIR(unsigned long hex) {
                                             so the number is eight digits long */
     }
 
+    if (newhex == oldhex) return;
+    oldhex = newhex;
+    Serial.print(newhex);
+    Serial.print(", ");
+    Serial.println(oldhex);
+
     IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
                                         number which is 32 bits 8*16=32 */
     Serial.println(newhex);
