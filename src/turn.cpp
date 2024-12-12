@@ -9,14 +9,16 @@ const int dir_pin = 3;
 const int receiver_pin = 4;
 
 bool should_step = false;
+int step_delay = 10;
+
 static unsigned long last_time = 0;
 
 void setup_step(int value) {
     should_step = true;
-    int dir = get_dir(value);
+    step_delay = get_delay(value);
     Serial.print("turn_action");
-    debug_data(value, dir);
-    digitalWrite(dir_pin, dir);
+    debug_data(value, get_dir(value));
+    digitalWrite(dir_pin, get_dir(value));
 }
 
 void receive() {
@@ -39,7 +41,7 @@ void receive() {
 void step() {
     if (should_step) {
         digitalWrite(step_pin, HIGH);
-        delay(1);
+        delay(step_delay);
         digitalWrite(step_pin, LOW);
     }
 }
@@ -51,12 +53,13 @@ void test() {
 }
 
 void loop() {
-    unsigned long current_time = millis();
-    if (current_time - last_time >= 500) {
-        receive();
-        last_time = current_time;
-    }
-    step();
+    //unsigned long current_time = millis();
+    //if (current_time - last_time >= 500) {
+    //    receive();
+    //    last_time = current_time;
+    //}
+    test();
+    //step();
 }
 
 void setup() {
