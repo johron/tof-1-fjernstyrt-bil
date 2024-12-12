@@ -29,6 +29,8 @@ void receive() {
 
         if (operation == HEX_DRIVE) {
             setup_step(value); 
+        } else if (operation == HEX_STOP_D) {
+            should_step = false;
         } else {
             Serial.print("unrecog, value=");
             Serial.println(value);

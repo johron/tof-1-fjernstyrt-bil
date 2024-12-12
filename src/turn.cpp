@@ -28,7 +28,9 @@ void receive() {
         unsigned long value = received & 0xFFF;
 
         if (operation == HEX_TURN) {
-            setup_step(value); 
+            setup_step(value);
+        } else if (operation == HEX_STOP_T) {
+            should_step = false;
         } else {
             Serial.print("unrecog, value=");
             Serial.println(value);

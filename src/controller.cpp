@@ -45,6 +45,14 @@ void joystick() {
         sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
     }
 
+    if (yValue >= 450 && yValue <= 550) {
+        sendIR(HEX_STOP_T);
+    }
+
+    if (xValue >= 450 && xValue <= 550) {
+        sendIR(HEX_STOP_D);
+    }
+
     delay(10);
 }
 
