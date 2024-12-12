@@ -18,7 +18,7 @@ void sendIR(unsigned long hex) {
     // Check if the hex number is eight digits long
     if ((newhex & 0xFFF00000) == 0) {
         newhex = (newhex << 12) | 0xFFF; /* Add three hexadecimal digits at the end FFF (dec:4095)
-                                            so the number is eight digits long */
+                                            so the number is eight digits long */ 
     }
 
     if (newhex == oldhex) return;
@@ -39,13 +39,9 @@ void joystick() {
 
     if (xValue < 450) {
         sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
-    } else if (xValue > 550) {
-        sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
     }
 
     if (yValue < 450) {
-        sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
-    } else if (yValue > 550) {
         sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
     }
 
