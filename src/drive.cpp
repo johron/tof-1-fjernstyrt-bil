@@ -51,12 +51,13 @@ void test() {
 }
 
 void loop() {
-    unsigned long current_time = millis();
-    if (current_time - last_time >= 500) {
-        receive();
-        last_time = current_time;
-    }
-    step();
+    //unsigned long current_time = millis();
+    //if (current_time - last_time >= 500) {
+    //    receive();
+    //    last_time = current_time;
+    //}
+    test();
+    //step();
 }
 
 void setup() {

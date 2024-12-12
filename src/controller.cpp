@@ -38,15 +38,15 @@ void joystick() {
     int yValue = analogRead(vry_pin);
 
     if (xValue < 450) {
-        sendIR((HEX_DRIVE << 12) | 0x3FF);
+        sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
     } else if (xValue > 550) {
-        sendIR((HEX_DRIVE << 12) | 0x000);
+        sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
     }
 
     if (yValue < 450) {
-        sendIR((HEX_TURN << 12) | 0x3FF);
+        sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
     } else if (yValue > 550) {
-        sendIR((HEX_TURN << 12) | 0x000);
+        sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
     }
 
     delay(10);
