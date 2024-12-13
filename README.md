@@ -17,3 +17,8 @@ lag program det bilen bare går fram og tilbake, også svinging til sides (ingen
 
 ## hva gjør det
 Dette snurrer bare motorene og kan endre retning etter kontroller-inputs. Snurrer begge motorene.
+
+
+## feil som har skjedd
+glemt å legge til sjekk for når xValue eller yValue er høyere enn 550 så når det har vært en slik verdi så har ikke det vært noen
+oppfylte krav, så den har bare gått videre.

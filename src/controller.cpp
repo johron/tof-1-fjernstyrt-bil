@@ -37,11 +37,11 @@ void joystick() {
     int xValue = analogRead(vrx_pin);
     int yValue = analogRead(vry_pin);
 
-    if (xValue < 450) {
+    if (xValue < 450 || xValue > 550) {
         sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
     }
 
-    if (yValue < 450) {
+    if (yValue < 450 || yValue > 550) {
         sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
     }
 
