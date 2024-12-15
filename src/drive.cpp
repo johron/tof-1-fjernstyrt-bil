@@ -30,6 +30,7 @@ void receive() {
         if (operation == HEX_DRIVE) {
             setup_step(value); 
         } else if (operation == HEX_STOP_D) {
+            Serial.println("stop_drive");
             should_step = false;
         } else {
             Serial.print("unrecog, value=");
@@ -48,20 +49,13 @@ void step() {
     }
 }
 
-void test() {
-    digitalWrite(step_pin, HIGH);
-    delay(1);
-    digitalWrite(step_pin, LOW);
-}
-
 void loop() {
-    //unsigned long current_time = millis();
-    //if (current_time - last_time >= 500) {
-    //    receive();
-    //    last_time = current_time;
-    //}
-    test();
-    //step();
+    unsigned long current_time = millis();
+    if (current_time - last_time >= 500) {
+        receive();
+        last_time = current_time;
+    }
+    step();
 }
 
 void setup() {
