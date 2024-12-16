@@ -38,7 +38,7 @@ void receive() {
         }
 
         IrReceiver.resume();
-    }
+    } // else { Serial.println("no decode"); }
 }
 
 void step() {
