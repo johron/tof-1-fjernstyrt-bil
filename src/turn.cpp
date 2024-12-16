@@ -9,16 +9,14 @@ const int dir_pin = 3;
 const int receiver_pin = 4;
 
 bool should_step = false;
-int step_delay = 10;
-
 static unsigned long last_time = 0;
 
 void setup_step(int value) {
     should_step = true;
-    step_delay = get_delay(value);
+    int dir = get_dir(value);
     Serial.print("turn_action");
-    debug_data(value, get_dir(value));
-    digitalWrite(dir_pin, get_dir(value));
+    debug_data(value, dir);
+    digitalWrite(dir_pin, dir);
 }
 
 void receive() {
@@ -30,7 +28,7 @@ void receive() {
         if (operation == HEX_TURN) {
             setup_step(value);
         } else if (operation == HEX_STOP_T) {
-            Serial.println("stop_turn");
+            Serial.println("stop_drive");
             should_step = false;
         } else {
             Serial.print("unrecog, value=");
@@ -44,14 +42,23 @@ void receive() {
 void step() {
     if (should_step) {
         digitalWrite(step_pin, HIGH);
-        delay(step_delay);
+        delay(1);
         digitalWrite(step_pin, LOW);
     }
 }
 
+void test() {
+    digitalWrite(step_pin, HIGH);
+    delay(1);
+    digitalWrite(step_pin, LOW);
+}
+
 void loop() {
     unsigned long current_time = millis();
-    if (current_time - last_time >= 500) {
+    if (current_time - last_time >= 300) {
+        for (int i = 0; i < 10; i++) {
+            receive();
+        }
         receive();
         last_time = current_time;
     }

@@ -18,30 +18,29 @@ void sendIR(unsigned long hex) {
     // Check if the hex number is eight digits long
     if ((newhex & 0xFFF00000) == 0) {
         newhex = (newhex << 12) | 0xFFF; /* Add three hexadecimal digits at the end FFF (dec:4095)
-                                            so the number is eight digits long */ 
+                                            so the number is eight digits long */
     }
-
-    if (newhex == oldhex) return;
-    oldhex = newhex;
-    Serial.print(newhex);
-    Serial.print(", ");
-    Serial.println(oldhex);
 
     IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
                                         number which is 32 bits 8*16=32 */
-    delay(10);
+    Serial.println(newhex);
+    delay(25);
 }
 
 void joystick() {
     int xValue = analogRead(vrx_pin);
     int yValue = analogRead(vry_pin);
 
-    if (xValue < 450 || xValue > 550) {
-        sendIR((HEX_DRIVE << 12) | (xValue & 0xFFF));
+    if (xValue < 450) {
+        sendIR((HEX_DRIVE << 12) | 0x3FF);
+    } else if (xValue > 550) {
+        sendIR((HEX_DRIVE << 12) | 0x000);
     }
 
-    if (yValue < 450 || yValue > 550) {
-        sendIR((HEX_TURN << 12) | (yValue & 0xFFF));
+    if (yValue < 450) {
+        sendIR((HEX_TURN << 12) | 0x3FF);
+    } else if (yValue > 550) {
+        sendIR((HEX_TURN << 12) | 0x000);
     }
 
     if (yValue >= 450 && yValue <= 550) {
