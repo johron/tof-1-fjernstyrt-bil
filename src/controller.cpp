@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <IRremote.hpp>
-#include <OneButton.h>
 
 #include "../hdr/shared.hpp"
 
