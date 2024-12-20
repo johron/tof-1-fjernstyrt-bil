@@ -23,7 +23,6 @@ void sendIR(unsigned long hex) {
 
     IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
                                         number which is 32 bits 8*16=32 */
-    Serial.println(newhex);
     delay(25);
 }
 
@@ -59,6 +58,5 @@ void loop() {
 }
 
 void setup() {
-    Serial.begin(9600);
     IrSender.begin(ir_led_pin);
 }

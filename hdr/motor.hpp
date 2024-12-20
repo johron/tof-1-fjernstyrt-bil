@@ -11,10 +11,3 @@ int get_dir(int value) {
         return LOW;
     }
 }
-
-void debug_data(int value, int dir) {
-    Serial.print(", value=");
-    Serial.print(value);
-    Serial.print(", dir=");
-    Serial.println(get_dir(value));
-}

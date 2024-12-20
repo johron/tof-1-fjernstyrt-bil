@@ -14,8 +14,6 @@ static unsigned long last_time = 0;
 void setup_step(int value) {
     should_step = true;
     int dir = get_dir(value);
-    Serial.print("turn_action");
-    debug_data(value, dir);
     digitalWrite(dir_pin, dir);
 }
 
@@ -28,11 +26,7 @@ void receive() {
         if (operation == HEX_TURN) {
             setup_step(value);
         } else if (operation == HEX_STOP_T) {
-            Serial.println("stop_drive");
             should_step = false;
-        } else {
-            Serial.print("unrecog, value=");
-            Serial.println(value);
         }
 
         IrReceiver.resume();
@@ -45,12 +39,6 @@ void step() {
         delay(1);
         digitalWrite(step_pin, LOW);
     }
-}
-
-void test() {
-    digitalWrite(step_pin, HIGH);
-    delay(1);
-    digitalWrite(step_pin, LOW);
 }
 
 void loop() {
@@ -66,7 +54,6 @@ void loop() {
 }
 
 void setup() {
-    Serial.begin(9600);
     digitalWrite(dir_pin, HIGH);
     IrReceiver.begin(receiver_pin, ENABLE_LED_FEEDBACK);
 }
