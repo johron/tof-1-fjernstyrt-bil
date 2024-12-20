@@ -20,7 +20,7 @@ void setup_step(int value) {
 void receive() {
     if (IrReceiver.decode()) {
         unsigned long received = bitreverse32Bit(IrReceiver.decodedIRData.decodedRawData);
-        unsigned long operation = get_value(received);
+        unsigned long operation = received >> 12;
         unsigned long value = received & 0xFFF;
 
         if (operation == HEX_TURN) {
