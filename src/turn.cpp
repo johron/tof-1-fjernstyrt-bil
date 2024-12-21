@@ -47,7 +47,6 @@ void loop() {
         for (int i = 0; i < 10; i++) {
             receive();
         }
-        receive();
         last_time = current_time;
     }
     step();
