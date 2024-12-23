@@ -13,14 +13,11 @@ const int joystick_btn_pin = 3;
 void sendIR(unsigned long hex) {
     unsigned long newhex = hex;
 
-    // Check if the hex number is eight digits long
     if ((newhex & 0xFFF00000) == 0) {
-        newhex = (newhex << 12) | 0xFFF; /* Add three hexadecimal digits at the end FFF (dec:4095)
-                                            so the number is eight digits long */
+        newhex = (newhex << 12) | 0xFFF;
     }
 
-    IrSender.sendNECMSB(newhex, 32); /* 32 because it is a eight digit hexadecimal
-                                        number which is 32 bits 8*16=32 */
+    IrSender.sendNEC(newhex, 32);
     delay(25);
 }
 
