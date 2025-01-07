@@ -1,4 +1,4 @@
-# Radiostyrt bil-prosjekt
+# Fjernstyrt bil-prosjekt
 Dette er et prosjekt laget for teknologi og forskningslære 1 ved Sotra Videregående Skule. Det er skrevet en [rapport](#rapport) som går mer i dybde på hele prosjektet.
 
 ## Bilder
