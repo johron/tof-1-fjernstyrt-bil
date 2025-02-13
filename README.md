@@ -1,5 +1,4 @@
 # Fjernstyrt bil-prosjekt med Arduino
-[Norsk](./README.md) | [English](./README_EN.md)
 
 Dette er et prosjekt laget for "Teknologi og Forskningslære" 1 ved Sotra Videregående Skule.
 
